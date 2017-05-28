@@ -13,7 +13,7 @@ O projeto conta hoje com as seguintes funcionalidades:
 
 ### Instalação ###
 
-A instalação do Finance requer inicialmente que a maquina tenha instalados o [Java] (https://www.java.com/pt_BR/download/), o [Maven](https://maven.apache.org/download.cgi) e o [Mysql] (https://www.mysql.com/downloads/). Posteriormente é  necessário executar o seguinte script no banco de dados:
+A instalação do Finance requer inicialmente que a maquina tenha instalados o [Java] (https://www.java.com/pt_BR/download), o [Maven](https://maven.apache.org/download.cgi) e o [Mysql] (https://www.mysql.com/downloads). Posteriormente é  necessário executar o seguinte script no banco de dados:
 
 ```
 CREATE USER `jiva_test`@`localhost` IDENTIFIED BY 'super-senha';

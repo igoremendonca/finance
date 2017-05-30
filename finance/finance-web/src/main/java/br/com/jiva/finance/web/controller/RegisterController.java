@@ -1,24 +1,24 @@
 package br.com.jiva.finance.web.controller;
 
+import br.com.jiva.finance.model.enuns.RegisterType;
 import br.com.jiva.finance.service.RegisterService;
+import br.com.jiva.finance.web.controller.to.GraphTO;
 import br.com.jiva.finance.web.controller.to.RegisterTO;
-import br.com.jiva.finance.web.util.RegisterConverter;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-
+import java.util.ArrayList;
 import java.util.List;
 
-import static br.com.jiva.finance.web.util.RegisterConverter.fromRegister;
-import static br.com.jiva.finance.web.util.RegisterConverter.fromRegisterList;
-import static br.com.jiva.finance.web.util.RegisterConverter.fromRegisterTO;
+import static br.com.jiva.finance.web.util.RegisterConverter.*;
 import static org.springframework.http.HttpStatus.ACCEPTED;
 import static org.springframework.http.HttpStatus.CREATED;
+import static org.springframework.http.HttpStatus.OK;
 
-@Controller
+@RestController
 @RequestMapping("/register")
 public class RegisterController {
 
@@ -30,36 +30,45 @@ public class RegisterController {
     }
 
     @RequestMapping(value = {"/",""}, method = RequestMethod.POST)
-    @ResponseBody
-    @ResponseStatus(value = CREATED)
-    public RegisterTO create(@Valid @RequestBody RegisterTO registerTO) {
-        return fromRegister(registerService.create(fromRegisterTO(registerTO)));
+    public ResponseEntity<RegisterTO> create(@Valid @RequestBody RegisterTO registerTO) {
+        RegisterTO result = fromRegister(registerService.create(fromRegisterTO(registerTO)));
+        return new ResponseEntity<RegisterTO>(result, CREATED);
     }
 
     @RequestMapping(value = {"/",""}, method = RequestMethod.GET)
-    @ResponseBody
-    public List<RegisterTO> findAll() {
-        return fromRegisterList(registerService.findAll());
+    public ResponseEntity<List<RegisterTO>> findAll() {
+        List<RegisterTO> results = fromRegisterList(registerService.findAll());
+        return new ResponseEntity<List<RegisterTO>>(results, OK);
     }
 
     @RequestMapping(value = {"/{registerId}"}, method = RequestMethod.GET)
-    @ResponseBody
-    public RegisterTO find(@PathVariable("registerId") Long registerId) {
-        return fromRegister(registerService.find(registerId));
+    public ResponseEntity<RegisterTO> find(@PathVariable("registerId") Long registerId) {
+        RegisterTO result = fromRegister(registerService.find(registerId));
+        return new ResponseEntity<RegisterTO>(result, OK);
     }
 
     @RequestMapping(value = {"/{registerId}"}, method = RequestMethod.PUT)
-    @ResponseBody
-    public RegisterTO update(@PathVariable("registerId") Long registerId, @Valid @RequestBody RegisterTO registerTO) {
+    public ResponseEntity<RegisterTO> update(@PathVariable("registerId") Long registerId, @Valid @RequestBody RegisterTO registerTO) {
         registerTO.setId(registerId);
-        return fromRegister(registerService.update(registerId, fromRegisterTO(registerTO)));
+        RegisterTO result = fromRegister(registerService.update(registerId, fromRegisterTO(registerTO)));
+        return new ResponseEntity<RegisterTO>(result, OK);
     }
 
     @RequestMapping(value = {"/{registerId}"}, method = RequestMethod.DELETE)
-    @ResponseBody
     @ResponseStatus(value = ACCEPTED)
     public void delete(@PathVariable("registerId") Long registerId) {
         registerService.delete(registerId);
     }
 
+    @RequestMapping(value = {"/graph"}, method = RequestMethod.GET)
+    public ResponseEntity<List<GraphTO>> getGraphInformation() {
+        List<GraphTO> result = new ArrayList<>();
+        for (RegisterType type : RegisterType.values())
+          result.add(GraphTO.builder()
+                      .label(type.name())
+                      .value(registerService.getValueByType(type))
+                      .build());
+
+        return new ResponseEntity<List<GraphTO>>(result, OK);
+    }
 }

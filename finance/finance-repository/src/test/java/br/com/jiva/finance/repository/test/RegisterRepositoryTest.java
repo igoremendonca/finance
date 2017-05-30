@@ -25,12 +25,11 @@ public class RegisterRepositoryTest {
     private RegisterRepository registerRepository;
 
     private Register register;
+    String description = "Register 1";
+    Double value = 100D;
 
     @Before
     public void setup() {
-        String description = "Register 1";
-        Double value = 100D;
-
         register = Register.of(description, EXPENSE, value);
     }
 
@@ -84,7 +83,21 @@ public class RegisterRepositoryTest {
         assertEquals(register, registerFound.get(0));
     }
 
+    @Test
+    public void should_find_value_register_by_type() {
+        for (int i = 0; i < 3; i++) {
+            registerRepository.save(getNewRegister());
+        }
+        Double valueByType = registerRepository.findSumValueByType(EXPENSE);
+        assertNotNull(valueByType);
+        assertEquals(valueByType, new Double(3 * value));
+    }
+
     private Register findRegister(Long id) {
         return registerRepository.findOne(id);
+    }
+
+    public Register getNewRegister() {
+        return Register.of(description, EXPENSE, value);
     }
 }

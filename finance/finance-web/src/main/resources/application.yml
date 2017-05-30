@@ -1,0 +1,20 @@
+server:
+  port: 8080
+  contextPath: /Finance
+
+spring:
+  profiles: default
+
+datasource:
+  finance:
+    url: jdbc:mysql://localhost:3306/finance
+    username: jiva
+    password: jiv4@2017
+    driverClassName: com.mysql.jdbc.Driver
+    defaultSchema:
+    maxPoolSize: 20
+    hibernate:
+      hbm2ddl.method: update
+      show_sql: true
+      format_sql: true
+      dialect: org.hibernate.dialect.MySQLDialect

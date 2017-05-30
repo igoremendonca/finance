@@ -2,6 +2,7 @@ package br.com.jiva.finance.service;
 
 
 import br.com.jiva.finance.model.Register;
+import br.com.jiva.finance.model.enuns.RegisterType;
 
 import java.util.List;
 
@@ -12,4 +13,5 @@ public interface RegisterService {
     Register update(Long registerId, Register register);
     void delete(Long registerId);
     List<Register> findAll();
+    Double getValueByType(RegisterType type);
 }

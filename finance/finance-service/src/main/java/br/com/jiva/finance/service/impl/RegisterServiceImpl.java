@@ -4,6 +4,7 @@ package br.com.jiva.finance.service.impl;
 import br.com.jiva.finance.commons.enuns.ExceptionCode;
 import br.com.jiva.finance.commons.exception.FinanceException;
 import br.com.jiva.finance.model.Register;
+import br.com.jiva.finance.model.enuns.RegisterType;
 import br.com.jiva.finance.repository.RegisterRepository;
 import br.com.jiva.finance.service.RegisterService;
 import org.slf4j.LoggerFactory;
@@ -62,6 +63,11 @@ public class RegisterServiceImpl implements RegisterService {
     public List<Register> findAll() {
         log.debug("Finding all registers");
         return (List<Register>) registerRepository.findAll();
+    }
+
+    public Double getValueByType(RegisterType type) {
+        log.debug("Finding information for graph");
+        return registerRepository.findSumValueByType(type);
     }
 
     private void verifying(Register register) throws FinanceException {

@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
+import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
@@ -31,7 +32,7 @@ public class Register {
     private RegisterType type;
 
     @NotNull
-    @Min(0)
+    @DecimalMin("0.01")
     private Double value;
 
     public static Register of(Long id, String description, RegisterType type, Double value) {

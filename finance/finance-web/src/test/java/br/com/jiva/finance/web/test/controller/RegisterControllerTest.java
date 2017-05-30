@@ -88,6 +88,17 @@ public class RegisterControllerTest {
     }
 
     @Test
+    public void should_not_create_register_when_register_is_invalid_value_0() throws Exception {
+        RegisterTO registerTO = getNewInvalidRegisterTOValue0();
+
+        mockMvc.perform(post(PATH)
+                .contentType(APPLICATION_JSON)
+                .content(toJson(registerTO)))
+                .andDo(print())
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
     public void should_update_register() throws Exception {
         RegisterTO registerTO = getRegisterTO();
         when(registerService.create(fromRegisterTO(registerTO))).thenReturn(register);
@@ -162,13 +173,21 @@ public class RegisterControllerTest {
         return RegisterTO.builder()
                 .description(description)
                 .type(RegisterTypeTO.EXPENSE)
-                .value(value)
+                .value(100D)
                 .build();
     }
 
     private RegisterTO getNewInvalidRegisterTO() {
         return RegisterTO.builder()
                 .type(RegisterTypeTO.EXPENSE)
+                .build();
+    }
+
+    private RegisterTO getNewInvalidRegisterTOValue0() {
+        return RegisterTO.builder()
+                .description(description)
+                .type(RegisterTypeTO.EXPENSE)
+                .value(0D)
                 .build();
     }
 

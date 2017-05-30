@@ -6,6 +6,7 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import org.hibernate.validator.constraints.NotEmpty;
 
+import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
@@ -20,10 +21,11 @@ public class RegisterTO {
     @NotEmpty
     private String description;
 
+    @NotNull
     private RegisterTypeTO type;
 
     @NotNull
-    @Min(0)
+    @DecimalMin("0.01")
     private Double value;
 
     public void setId(Long id) {

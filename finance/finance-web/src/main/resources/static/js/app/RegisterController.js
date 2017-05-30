@@ -48,7 +48,7 @@ angular.module('financeApp').controller('RegisterController',
                     },
                     function (errResponse) {
                         console.error('Error while creating Register');
-                        self.errorMessage = 'Ocorreu um erro durante a alteração do registro: ' + errResponse.data.errorMessage;
+                        self.errorMessage = 'Ocorreu um erro durante a alteração do registro: ' + errResponse.data.errorCode;
                         self.successMessage='';
                     }
                 );
@@ -69,7 +69,7 @@ angular.module('financeApp').controller('RegisterController',
                     },
                     function(errResponse){
                         console.error('Error while updating Register');
-                        self.errorMessage='Ocorreu um erro durante a alteração do registro: '+errResponse.data;
+                        self.errorMessage='Ocorreu um erro durante a alteração do registro: '+ errResponse.data.errorCode;
                         self.successMessage='';
                     }
                 );

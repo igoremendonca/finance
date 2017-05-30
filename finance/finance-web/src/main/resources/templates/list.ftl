@@ -31,8 +31,8 @@
                             <label class="col-md-2 control-lable" for="typeSelect">Tipo do registro</label>
                             <div class="col-md-7">
                                 <select id="typeSelect" ng-model="ctrl.register.type">
+                                    <option value="RECIPE" selected="true">Receita</option>
                                     <option value="EXPENSE">Despesa</option>
-                                    <option value="RECIPE">Receita</option>
                                 </select>
                             </div>
                         </div>
@@ -68,7 +68,7 @@
                     <tr ng-repeat="r in ctrl.getAllRegisters()">
                         <td>{{r.id}}</td>
                         <td>{{r.description}}</td>
-                        <td>{{r.type}}</td>
+                        <td>{{getType(r.type)}}</td>
                         <td>{{r.value}}</td>
                         <td><button type="button" ng-click="ctrl.editRegister(r.id)" class="btn btn-success custom-width">Edit</button></td>
                         <td><button type="button" ng-click="ctrl.removeRegister(r.id)" class="btn btn-danger custom-width">Remove</button></td>

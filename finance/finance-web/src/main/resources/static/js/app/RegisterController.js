@@ -141,7 +141,14 @@ angular.module('financeApp').controller('RegisterController',
                     console.error('Error while removing Register ' + id + ', Error :' + errResponse.data);
                   }
                 );
-
        }
+
+       $scope.getType = function(type) {
+            switch (type) {
+                case "EXPENSE": return "Despesa";
+                case "RECIPE": return "Receita";
+            }
+       }
+
     }
     ]);

@@ -4,6 +4,7 @@ import br.com.jiva.finance.model.enuns.RegisterType;
 import br.com.jiva.finance.service.RegisterService;
 import br.com.jiva.finance.web.controller.to.GraphTO;
 import br.com.jiva.finance.web.controller.to.RegisterTO;
+import br.com.jiva.finance.web.controller.to.enuns.RegisterTypeTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -13,6 +14,7 @@ import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
 
+import static br.com.jiva.finance.model.enuns.RegisterType.valueOf;
 import static br.com.jiva.finance.web.util.RegisterConverter.*;
 import static org.springframework.http.HttpStatus.ACCEPTED;
 import static org.springframework.http.HttpStatus.CREATED;
@@ -63,10 +65,10 @@ public class RegisterController {
     @RequestMapping(value = {"/graph"}, method = RequestMethod.GET)
     public ResponseEntity<List<GraphTO>> getGraphInformation() {
         List<GraphTO> result = new ArrayList<>();
-        for (RegisterType type : RegisterType.values())
+        for (RegisterTypeTO type : RegisterTypeTO.values())
           result.add(GraphTO.builder()
-                      .label(type.name())
-                      .value(registerService.getValueByType(type))
+                      .label(type.getDescription())
+                      .value(registerService.getValueByType(valueOf(type.name())))
                       .build());
 
         return new ResponseEntity<List<GraphTO>>(result, OK);

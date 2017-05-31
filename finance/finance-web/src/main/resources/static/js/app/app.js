@@ -1,4 +1,4 @@
-var app = angular.module('financeApp',['ui.router','ngStorage','ng-fusioncharts']);
+var app = angular.module('financeApp',['ui.router','ngStorage','ng-fusioncharts', 'ui.utils.masks']);
 
 app.constant('urls', {
     BASE: 'http://localhost:8080/Finance',

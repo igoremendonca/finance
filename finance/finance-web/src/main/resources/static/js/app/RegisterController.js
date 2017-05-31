@@ -5,6 +5,7 @@ angular.module('financeApp').controller('RegisterController',
 
         var self = this;
         self.register = {};
+        self.register.type = "RECIPE";
         self.registers=[];
 
         self.submit = submit;
@@ -48,7 +49,7 @@ angular.module('financeApp').controller('RegisterController',
                     },
                     function (errResponse) {
                         console.error('Error while creating Register');
-                        self.errorMessage = 'Ocorreu um erro durante a alteração do registro: ' + errResponse.data.errorCode;
+                        self.errorMessage = 'Ocorreu um erro durante a criação do registro: ' + getHandlerErrorField(errResponse.data.field) + ': '+ getHandlerErrorCode(errResponse.data.errorCode);
                         self.successMessage='';
                     }
                 );
@@ -69,7 +70,7 @@ angular.module('financeApp').controller('RegisterController',
                     },
                     function(errResponse){
                         console.error('Error while updating Register');
-                        self.errorMessage='Ocorreu um erro durante a alteração do registro: '+ errResponse.data.errorCode;
+                        self.errorMessage = 'Ocorreu um erro durante a alteração do registro: ' + getHandlerErrorField(errResponse.data.field) + ': '+ getHandlerErrorCode(errResponse.data.errorCode);
                         self.successMessage='';
                     }
                 );
@@ -112,6 +113,7 @@ angular.module('financeApp').controller('RegisterController',
             self.successMessage='';
             self.errorMessage='';
             self.register={};
+            self.register.type = "RECIPE";
             $scope.myForm.$setPristine(); //reset Form
         }
 
@@ -122,6 +124,7 @@ angular.module('financeApp').controller('RegisterController',
                showLegend: "1",
                legendShadow: "0",
                legendBorderAlpha: "0",
+               centerLabel: "$label: $value",
                theme: "ocean"
            },
            data: getGraphData()
@@ -147,6 +150,28 @@ angular.module('financeApp').controller('RegisterController',
             switch (type) {
                 case "EXPENSE": return "Despesa";
                 case "RECIPE": return "Receita";
+            }
+       }
+
+       $scope.getStyle = function(type) {
+           switch(type) {
+               case "EXPENSE": return "red";
+               case "RECIPE": return "blue";
+           }
+       }
+
+       function getHandlerErrorCode(errorCode) {
+            switch(errorCode) {
+                case "NotNull": return "Não pode ser nulo ou vazio.";
+                case "DecimalMin": return "Deve ser maior que 0.";
+            }
+       }
+
+       function getHandlerErrorField(errorField) {
+            switch(errorField) {
+                case "description": return "Descrição";
+                case "value": return "Valor";
+                case "type": return "Tipo";
             }
        }
 

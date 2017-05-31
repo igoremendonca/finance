@@ -10,7 +10,9 @@
 
 <div ui-view></div>
 <script src="js/lib/angular.min.js" ></script>
+<script src="js/lib/angular-locale_pt-br.js" ></script>
 <script src="js/lib/angular-fusioncharts.min.js" ></script>
+<script src="js/lib/masks/angular-input-masks-standalone.min.js" ></script>
 <script src="js/lib/fusioncharts/fusioncharts.js" ></script>
 <script src="js/lib/fusioncharts/themes/fusioncharts.theme.fint.js"></script>
 <script src="js/lib/angular-ui-router.min.js" ></script>

@@ -21,15 +21,23 @@ CREATE DATABASE `finance_test`;
 GRANT ALL PRIVILEGES ON *.* TO `jiva_test`@`localhost`;
 
 
-CREATE USER `jiva`@`localhost` IDENTIFIED BY '##jiv4@2017##';
+CREATE USER `jiva`@`localhost` IDENTIFIED BY 'jiv4@2017';
 CREATE DATABASE `finance`;
 GRANT ALL PRIVILEGES ON *.* TO `jiva`@`localhost`;
+
+CREATE TABLE `finance`.`register` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `description` VARCHAR(300) NULL,
+  `type` VARCHAR(8) NULL,
+  `value` double, 
+  PRIMARY KEY (`id`));
+  
 ```
-O próximo passo é a instalação e disponibilização dos serviços do projeto back-side Java. Para realizar essa tarefa é necessário executar os seguintes script à partir da raiz do projeto finance:
+O próximo passo é a instalação e disponibilização dos serviços do projeto front-end e back-side. Para realizar essa tarefa é necessário executar os seguintes script à partir da raiz do projeto finance (finance-web/finance):
 
 ```
 $ mvn clean install
 $ cd finance-web
 $ mvn spring-boot:run
 ```
-Por fim, basta instalar e disponibilizar o projeto front-end Anjular. Para isso é necessrio...
+Para testar se a aplicação foi inicializada com sucesso acesse: http://localhost:8080/Finance
